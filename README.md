@@ -39,11 +39,13 @@ b) We need to allow DNS hostname so thatvinstances launched in the VPC receive p
 - second subnet name is my-public-2
 - ip address 172.20.64.0/18
 - AZ is us-east-2b
+- 
 ![image](https://github.com/Akshay-Gk/Install-Wordpress-securely-in-a-custom-aws-vpc/assets/112197849/98c3834d-6e91-41f4-9b2b-6a279b855fb7)
 
 - Third  subnet name is my-private-1
 - ip address 172.20.128.0/18
 - AZ is us-east-2c
+
 ![image](https://github.com/Akshay-Gk/Install-Wordpress-securely-in-a-custom-aws-vpc/assets/112197849/dfb2b8dc-0578-4e42-92d0-ad7641bdb62a)
 
 4.  Enable public ipv4 for my-public-1 & my-public-2 subnets.
