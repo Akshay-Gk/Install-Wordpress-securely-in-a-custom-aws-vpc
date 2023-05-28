@@ -198,8 +198,8 @@ c) frontend instance
      
 * install mysql
 - set passwrod for root
-    
-```sudo mysql_secure_installation'''
+
+```sudo mysql_secure_installation```
 
 In order to log into MariaDB to secure it, we'll need the current
 password for the root user. If you've just installed MariaDB, and
@@ -273,9 +273,9 @@ installation should now be secure
   
   ```create user wpuser@'%' identified by 'wpuser123';
      grant all privileges on blogdb.* to wpuser@'%';
-     flush privileges;```
+     flush privileges; ```
      
-     * Login as wpuser and check database
+  * Login as wpuser and check database
      
      ```mysql -u wpuser -pwpuser123
         show databases;```
