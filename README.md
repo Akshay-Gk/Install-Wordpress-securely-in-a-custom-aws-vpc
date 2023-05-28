@@ -197,7 +197,7 @@ c) frontend instance
       
      
 * install mysql
-    - set passwrod for root
+- set passwrod for root
     
 ```sudo mysql_secure_installation'''
 
