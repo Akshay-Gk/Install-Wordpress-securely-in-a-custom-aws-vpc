@@ -153,7 +153,43 @@ c) Security group for backend server
 
 - Here we are creating 3 instances with name bastion,frontend and backend
 
-a)  
+a)  bastion instance
+
+- Add name .Here im giving my-bastion-server
+- Select my-vpc
+- select one of the public subnet
+- Seect existing security group and add my-bastion sg
+
+![image](https://github.com/Akshay-Gk/Install-Wordpress-securely-in-a-custom-aws-vpc/assets/112197849/dfa7c115-2355-4a66-86a5-36a394864600)
+
+b) frontend instance
+
+- Add name .Here im giving my-frontend-server
+- Select my-vpc
+- select one of the public subnet
+- Seect existing security group and add my-frontend sg
+
+![image](https://github.com/Akshay-Gk/Install-Wordpress-securely-in-a-custom-aws-vpc/assets/112197849/ffa2a98a-da1f-4ea0-8e4f-9c7b34ce4383)
+
+c) frontend instance
+
+- Add name .Here im giving my-backend-server
+- Select my-vpc
+- select one of the private subnet
+- Seect existing security group and add my-backend sg
+
+![image](https://github.com/Akshay-Gk/Install-Wordpress-securely-in-a-custom-aws-vpc/assets/112197849/264f6a77-3cab-4ed7-a759-29e37b95ec3c)
+
+> `Note: We cannot directly ssh to frontend or backend server.We can access front end and backend through bastion server only'
+
+
+11. Now ssh to each server and try try ping. You should be able to ping from all three server. In case you are unable ping check the          security group and route table.
+
+  ```ping -c 3 8.8.8.8```
+  
+  
+12. Install database server in backend. Here im using mariadb
+
 
 
   
