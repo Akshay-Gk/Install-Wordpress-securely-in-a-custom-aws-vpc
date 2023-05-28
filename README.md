@@ -2,7 +2,7 @@
 
 ## Description:
 
-Here we set up a custom made secure setup for installing wordpress.
+Database servers are the most important servers in any small or a big company because it contains all the data sets that can be of any user or employee of that company. The best practices of server security are therefore focused on protecting digital assets from cybercriminals. This approach is necessary because numerous hackers exploit existing vulnerabilities for financial gain. Here we set up a custom made secure setup for installing wordpress and protecting our server.
 
 ### Steps:
 
