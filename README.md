@@ -4,6 +4,11 @@
 
 Database servers are the most important servers in any small or a big company because it contains all the data sets that can be of any user or employee of that company. The best practices of server security are therefore focused on protecting digital assets from cybercriminals. This approach is necessary because numerous hackers exploit existing vulnerabilities for financial gain. Here we set up a custom made secure setup for installing wordpress and protecting our server.
 
+### Diagram:
+
+![image](https://github.com/Akshay-Gk/Install-Wordpress-securely-in-a-custom-aws-vpc/assets/112197849/77544d7c-f383-4347-a5b8-02b5e24c8616)
+
+
 ### Steps:
 
 1. Create a VPC
