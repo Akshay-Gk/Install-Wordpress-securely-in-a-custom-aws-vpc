@@ -190,11 +190,13 @@ c) frontend instance
   
 12. Install database server in backend. Here im using mariadb
 
-```sudo yum install mariadb105-server -y
-   sudo systemctl restart mariadb.service
-   sudo systemctl enable mariadb.service```
-    
-    * install mysql
+
+   sudo yum install mariadb105-server -y
+      sudo systemctl restart mariadb.service
+      sudo systemctl enable mariadb.service```
+      
+     
+* install mysql
     - set passwrod for root
     
 ```sudo mysql_secure_installation'''
@@ -289,7 +291,7 @@ installation should now be secure
 ```wget https://wordpress.org/wordpress-6.0.tar.gz
    tar -xvf wordpress-6.0.tar.gz```
    
-   * Copy wordpress extracted files to /var/www/html
+* Copy wordpress extracted files to /var/www/html
    
    ```sudo cp -r wordpress/*  /var/www/html/```
    
@@ -311,11 +313,12 @@ installation should now be secure
 * Now once you call the frontend server public dns name you should be able to access wordpress.
 > `Note: We haven't enabled https here so we need to call dns name with http`
 
+![image](https://github.com/Akshay-Gk/Install-Wordpress-securely-in-a-custom-aws-vpc/assets/112197849/3247cfd5-4572-4475-b35a-fed462553e9c)
 
 
-## Description:
+## Conclusion:
 
-
+Here we created a set up for installing wordpress. The setup is highly secure and it prevents direct access to the servers.we keep the backend server protected from outside world.
 
      
      
