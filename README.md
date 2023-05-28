@@ -149,8 +149,11 @@ c) Security group for backend server
 
 ![image](https://github.com/Akshay-Gk/Install-Wordpress-securely-in-a-custom-aws-vpc/assets/112197849/3e84641e-8899-4221-9637-f21898a3af7d)
 
+10. Create ec2 instance
 
+- Here we are creating 3 instances with name bastion,frontend and backend
 
+a)  
 
 
   
