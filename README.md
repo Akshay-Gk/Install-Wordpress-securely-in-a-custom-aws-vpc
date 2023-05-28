@@ -197,7 +197,8 @@ c) frontend instance
     * install mysql
     - set passwrod for root
     
-```sudo mysql_secure_installation
+```sudo mysql_secure_installation'''
+
 In order to log into MariaDB to secure it, we'll need the current
 password for the root user. If you've just installed MariaDB, and
 haven't set the root password yet, you should just press enter here.
@@ -257,7 +258,7 @@ Reload privilege tables now? [Y/n] y
 Cleaning up...
 
 All done!  If you've completed all of the above steps, your MariaDB
-installation should now be secure```
+installation should now be secure
 
   * Now login as root user using the new password created.
   
