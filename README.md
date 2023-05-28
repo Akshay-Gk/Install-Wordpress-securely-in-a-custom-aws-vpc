@@ -271,7 +271,8 @@ installation should now be secure
   * Grant all privileges to new user on database
   * Here im giving database name as blogdb and user name as wpuser
   
-  ```create user wpuser@'%' identified by 'wpuser123';
+     ```
+     create user wpuser@'%' identified by 'wpuser123';
      grant all privileges on blogdb.* to wpuser@'%';
      flush privileges; ```
      
@@ -282,14 +283,18 @@ installation should now be secure
         
  13. Install httpd,php and php-mysqlnd in frontend server
  
- ```yum install httpd php php-mysqlnd
+ ```
+    yum install httpd php php-mysqlnd
     systemctl restart php-fpm.service httpd.service
-    systemctl enable php-fpm.service httpd.service```
+    systemctl enable php-fpm.service httpd.service
+ ```
     
 14. Install wordpress in frontend server
 
-```wget https://wordpress.org/wordpress-6.0.tar.gz
-   tar -xvf wordpress-6.0.tar.gz```
+```
+wget https://wordpress.org/wordpress-6.0.tar.gz
+   tar -xvf wordpress-6.0.tar.gz
+   ```
    
 * Copy wordpress extracted files to /var/www/html
    
