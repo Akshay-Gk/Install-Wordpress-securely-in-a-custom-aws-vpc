@@ -4,15 +4,15 @@
 
 Database servers are the most important servers in any small or a big company because it contains all the data sets that can be of any user or employee of that company. The best practices of server security are therefore focused on protecting digital assets from cybercriminals. This approach is necessary because numerous hackers exploit existing vulnerabilities for financial gain. Here we set up a custom made secure setup for installing wordpress and protecting our server.
 
-### Diagram:
+## Diagram:
 
 ![image](https://github.com/Akshay-Gk/Install-Wordpress-securely-in-a-custom-aws-vpc/assets/112197849/77544d7c-f383-4347-a5b8-02b5e24c8616)
 
 
-### Steps:
+## Step 1:
 
-1. Create a VPC
-  - My region is Ohio
+*Create a VPC
+ - My region is Ohio
  
 a) Login to aws console > VPC >  Create VPC
   - Add a name to vpc. Here im givibg my-vpc
@@ -26,17 +26,23 @@ b) We need to allow DNS hostname so thatvinstances launched in the VPC receive p
 
 ![image](https://github.com/Akshay-Gk/Install-Wordpress-securely-in-a-custom-aws-vpc/assets/112197849/119a5e87-adfe-4455-982b-ee0fafd88e0b)
 
-2. Create an internet gateway (igw)
+## Step 2:
 
--Add name. im giving my-vpc-igw
+* Create an internet gateway (igw)
+
+- Add name. im giving my-vpc-igw
 
 ![image](https://github.com/Akshay-Gk/Install-Wordpress-securely-in-a-custom-aws-vpc/assets/112197849/79d7b2ce-1bbf-4d59-9623-b9c578e624d6)
+
+## Step 3:
 
 - Attach igw to vpc (my-vpc)
 
 ![image](https://github.com/Akshay-Gk/Install-Wordpress-securely-in-a-custom-aws-vpc/assets/112197849/a94c5ef1-ad61-4318-a23e-ca897f386843)
 
-3. Create Subnets
+## Step 4:
+
+* Create Subnets
 
 - Here im creating 3 subnets ,Two public and one private.
 - Give your VPC id
@@ -58,11 +64,15 @@ b) We need to allow DNS hostname so thatvinstances launched in the VPC receive p
 
 ![image](https://github.com/Akshay-Gk/Install-Wordpress-securely-in-a-custom-aws-vpc/assets/112197849/dfb2b8dc-0578-4e42-92d0-ad7641bdb62a)
 
-4.  Enable public ipv4 for my-public-1 & my-public-2 subnets.
+## Step 5:
+
+Enable public ipv4 for my-public-1 & my-public-2 subnets.
 
 ![image](https://github.com/Akshay-Gk/Install-Wordpress-securely-in-a-custom-aws-vpc/assets/112197849/01e61fa1-f55f-4d7f-8ed6-eaf4c9a1e42c)
 
-5. Create a NAT Gateway.
+## Step 6:
+
+* Create a NAT Gateway.
 
 - Add a name. Here im giving my-nat
 - Select any of the public subnet.
@@ -73,7 +83,9 @@ b) We need to allow DNS hostname so thatvinstances launched in the VPC receive p
 
 > `Note: Nat Gateway should be created in one of the public subnet and assign an elastic ip. we use this for the private subnet to access internet from inside`
 
-6. Edit routing table
+## Step 7:
+
+* Edit routing table
 
 - Here we edit default routing table of my-vpc
 ![image](https://github.com/Akshay-Gk/Install-Wordpress-securely-in-a-custom-aws-vpc/assets/112197849/c445d47e-b0e8-4d92-a27f-157d91a0443a)
@@ -84,7 +96,9 @@ b) We need to allow DNS hostname so thatvinstances launched in the VPC receive p
 
 - Name default route as Public-route
 
-7. Create a new Route table and edit route
+## Step 8:
+
+* Create a new Route table and edit route
 
 - Name it as private-route
 - Choose my-vpc 
@@ -94,7 +108,9 @@ b) We need to allow DNS hostname so thatvinstances launched in the VPC receive p
 
 > `Note: Do not edit or delete the private ip route you can see in the route table as it is for internal communication`
 
-8. Subnet association
+## Step 9:
+
+* Subnet association
 
 ![image](https://github.com/Akshay-Gk/Install-Wordpress-securely-in-a-custom-aws-vpc/assets/112197849/bb4c450f-5253-4ff4-867c-890c76a142ae)
 
@@ -105,7 +121,9 @@ b) We need to allow DNS hostname so thatvinstances launched in the VPC receive p
 
 > `Note: By default all subnet will be associated with default route`
 
-9. Create security group.
+## Step 10:
+
+* Create security group.
 
 - Here we are creating 3 instances with name frontend,bastion and backend so we need 3 security group(sg)
 - For all 3 intstance we create different security rules to tighten security.
@@ -154,7 +172,9 @@ c) Security group for backend server
 
 ![image](https://github.com/Akshay-Gk/Install-Wordpress-securely-in-a-custom-aws-vpc/assets/112197849/3e84641e-8899-4221-9637-f21898a3af7d)
 
-10. Create ec2 instance
+## Step 11:
+
+* Create ec2 instance
 
 - Here we are creating 3 instances with name bastion,frontend and backend
 
@@ -187,13 +207,15 @@ c) frontend instance
 
 > `Note: We cannot directly ssh to frontend or backend server.We can access front end and backend through bastion server only'
 
+## Step 12:
 
-11. Now ssh to each server and try try ping. You should be able to ping from all three server. In case you are unable ping check the          security group and route table.
+* Now ssh to each server and try try ping. You should be able to ping from all three server. In case you are unable ping check the          security group and route table.
 
   ```ping -c 3 8.8.8.8```
   
+  ## Step 13:
   
-12. Install database server in backend. Here im using mariadb
+* Install database server in backend. Here im using mariadb
 
 
    sudo yum install mariadb105-server -y
@@ -285,27 +307,35 @@ installation should now be secure
      
      ```mysql -u wpuser -pwpuser123
         show databases;```
+ 
+ ## Step 14:
         
- 13. Install httpd,php and php-mysqlnd in frontend server
+ * Install httpd,php and php-mysqlnd in frontend server
  
  ```
     yum install httpd php php-mysqlnd
     systemctl restart php-fpm.service httpd.service
     systemctl enable php-fpm.service httpd.service
  ```
-    
-14. Install wordpress in frontend server
+ 
+## Step 15:
+
+* Install wordpress in frontend server
 
 ```
 wget https://wordpress.org/wordpress-6.0.tar.gz
    tar -xvf wordpress-6.0.tar.gz
    ```
    
+## Step 16:   
+   
 * Copy wordpress extracted files to /var/www/html
    
    ```sudo cp -r wordpress/*  /var/www/html/```
    
-15. editing /var/www/html/wp-config.php file
+## Step 17:
+   
+* editing /var/www/html/wp-config.php file
 
 -Intially we rename wp-config-sample.php to wp-config.php
 
@@ -320,7 +350,10 @@ wget https://wordpress.org/wordpress-6.0.tar.gz
 
 ![image](https://github.com/Akshay-Gk/Install-Wordpress-securely-in-a-custom-aws-vpc/assets/112197849/ec3751e8-b123-402d-a58d-660ac97506c2)
 
+## Installation completed
+
 * Now once you call the frontend server public dns name you should be able to access wordpress.
+
 > `Note: We haven't enabled https here so we need to call dns name with http`
 
 ![image](https://github.com/Akshay-Gk/Install-Wordpress-securely-in-a-custom-aws-vpc/assets/112197849/3247cfd5-4572-4475-b35a-fed462553e9c)
