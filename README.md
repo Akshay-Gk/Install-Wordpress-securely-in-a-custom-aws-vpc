@@ -175,57 +175,60 @@ c) **_Security group for backend server_**
 
 ![image](https://github.com/Akshay-Gk/Install-Wordpress-securely-in-a-custom-aws-vpc/assets/112197849/3e84641e-8899-4221-9637-f21898a3af7d)
 
-## Step 11: Create ec2 instance
+# Step 11: Create ec2 instance
 
 
 - **_Here we are creating 3 instances with name bastion,frontend and backend_**
 
-a)  bastion instance
+a) **bastion instance**
 
-- Add name .Here im giving my-bastion-server
-- Select my-vpc
-- select one of the public subnet
-- Seect existing security group and add my-bastion sg
+- Add name. Here i'm giving "my-bastion-server"
+- Select "my-vpc"
+- Select one of the public subnet
+- Select "existing security group" and add "my-bastion" security group
+
+> `Note: For instances in public subnet you can find "Auto-assign public ip" is in "enable". This happens as we enable "Auto-assign public ipv4 address" for public subnets. For private subnet it will be "disable" as we haven't enabled "Auto-assign public ipv4 address" for private subnets`
 
 ![image](https://github.com/Akshay-Gk/Install-Wordpress-securely-in-a-custom-aws-vpc/assets/112197849/dfa7c115-2355-4a66-86a5-36a394864600)
 
-b) frontend instance
+b) **frontend instance**
 
-- Add name .Here im giving my-frontend-server
-- Select my-vpc
+- Add name .Here i'm giving "my-frontend-server"
+- Select "my-vpc"
 - select one of the public subnet
-- Seect existing security group and add my-frontend sg
+- Seect "existing security group" and add "my-frontend" security group
 
 ![image](https://github.com/Akshay-Gk/Install-Wordpress-securely-in-a-custom-aws-vpc/assets/112197849/ffa2a98a-da1f-4ea0-8e4f-9c7b34ce4383)
 
-c) frontend instance
+c) **Frontend instance**
 
-- Add name .Here im giving my-backend-server
-- Select my-vpc
+- Add name .Here i'm giving my-backend-server
+- Select "my-vpc"
 - select one of the private subnet
-- Seect existing security group and add my-backend sg
+- Select "existing security group" and add "my-backend" security group
 
 ![image](https://github.com/Akshay-Gk/Install-Wordpress-securely-in-a-custom-aws-vpc/assets/112197849/264f6a77-3cab-4ed7-a759-29e37b95ec3c)
 
-> `Note: We cannot directly ssh to frontend or backend server.We can access front end and backend through bastion server only'
 
-## Step 12:
+> `Note: We cannot directly ssh to "frontend" or "backend" server.We can only access "frontend" and "backend" through "bastion" server'
 
-* Now ssh to each server and try try ping. You should be able to ping from all three server. In case you are unable ping check the          security group and route table.
+# Step 12: SSH to server
+
+* **_Now ssh to each server and try ping. You should be able to ping from all three servers. In case you are unable ping check the security group and route table_**
 
   ```ping -c 3 8.8.8.8```
   
-  ## Step 13:
+# Step 13: Install database server in backend
   
-* Install database server in backend. Here im using mariadb
+* Here i'm using "mariadb"
 
 
-   sudo yum install mariadb105-server -y
-      sudo systemctl restart mariadb.service
-      sudo systemctl enable mariadb.service```
+   ```sudo yum install mariadb105-server -y
+   sudo systemctl restart mariadb.service
+   sudo systemctl enable mariadb.service```
       
      
-* install mysql
+* **_install "mysql"_**
 - set passwrod for root
 
 ```sudo mysql_secure_installation```
@@ -291,28 +294,28 @@ Cleaning up...
 All done!  If you've completed all of the above steps, your MariaDB
 installation should now be secure
 
-  * Now login as root user using the new password created.
+  * **_Now login as root user using the new password created_**
   
   ```mysql -u root -pmysqlroot123```
   
-  * create a database
-  * Create a user
-  * Grant all privileges to new user on database
-  * Here im giving database name as blogdb and user name as wpuser
+  * _create a database_
+  * _Create a user_
+  * _Grant all privileges to new user on database_
+  * _Here i'm giving database name as "blogdb" and username as "wpuser"_
   
      ```
      create user wpuser@'%' identified by 'wpuser123';
      grant all privileges on blogdb.* to wpuser@'%';
      flush privileges; ```
      
-  * Login as wpuser and check database
+  * _Login as "wpuser" and check database_
      
      ```mysql -u wpuser -pwpuser123
         show databases;```
  
- ## Step 14:
+ # Step 14: Install httpd,php and php-mysqlnd
         
- * Install httpd,php and php-mysqlnd in frontend server
+ * _Install httpd,php and php-mysqlnd in frontend server_
  
  ```
     yum install httpd php php-mysqlnd
@@ -320,50 +323,48 @@ installation should now be secure
     systemctl enable php-fpm.service httpd.service
  ```
  
-## Step 15:
+# Step 15: Install wordpress
 
-* Install wordpress in frontend server
+* _Install wordpress in frontend server_
 
 ```
 wget https://wordpress.org/wordpress-6.0.tar.gz
    tar -xvf wordpress-6.0.tar.gz
    ```
    
-## Step 16:   
+# Step 16: Copy wordpress extracted files to /var/www/html
    
-* Copy wordpress extracted files to /var/www/html
    
    ```sudo cp -r wordpress/*  /var/www/html/```
    
-## Step 17:
+# Step 17: Editing /var/www/html/wp-config.php file
    
-* editing /var/www/html/wp-config.php file
 
--Intially we rename wp-config-sample.php to wp-config.php
+* _Intially we rename "wp-config-sample.php" to "wp-config.php"_
 
 ```wp-config-sample.php wp-config.ph```
 
-- Edit wp-config.php file
+- _Edit wp-config.php file_
 
 ```vi wp-config.php```
 
-- Provide below details
-- Database name, username,userpassword and host ip
+- _Provide below details_
+- _Database name, username,userpassword and host ip_
 
 ![image](https://github.com/Akshay-Gk/Install-Wordpress-securely-in-a-custom-aws-vpc/assets/112197849/ec3751e8-b123-402d-a58d-660ac97506c2)
 
 ## Installation completed
 
-* Now once you call the frontend server public dns name you should be able to access wordpress.
+* **_Now once you call the frontend server "public dns" name you should be able to access wordpress_**
 
-> `Note: We haven't enabled https here so we need to call dns name with http`
+> `Note: We haven't enabled https here so we need to call dns name with http://`
 
 ![image](https://github.com/Akshay-Gk/Install-Wordpress-securely-in-a-custom-aws-vpc/assets/112197849/3247cfd5-4572-4475-b35a-fed462553e9c)
 
 
-## Conclusion:
+# Conclusion:
 
-Here we created a set up for installing wordpress. The setup is highly secure and it prevents direct access to the servers.we keep the backend server protected from outside world.
+Here we created a set up for installing wordpress. The setup is highly secure and it prevents direct access to the servers.We keep the backend server protected from outside world.
 
      
      
