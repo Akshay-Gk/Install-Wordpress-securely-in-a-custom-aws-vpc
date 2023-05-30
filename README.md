@@ -95,87 +95,90 @@ b) **_We need to enable "DNS hostname" for the vpc so that, when an instances is
 
 - Name default route as **"Public-route"**
 
-## Step 8:
+# Step 8: Create a new Route table and Edit route
 
-* Create a new Route table and edit route
+- Name it as **""private-route"**
+- In VPC choose **"my-vpc"**
 
-- Name it as private-route
-- Choose my-vpc 
-- Edit and add a new route to 0.0.0.0/0 and give target as nat gateway(my-nat)
+![image](https://github.com/Akshay-Gk/Install-Wordpress-securely-in-a-custom-aws-vpc/assets/112197849/0922ad61-e94f-4339-8ade-47ae05d04d06)
+
+
+- Choose Destination as "0.0.0.0/0" and target as "nat gateway(my-nat)"
 
 ![image](https://github.com/Akshay-Gk/Install-Wordpress-securely-in-a-custom-aws-vpc/assets/112197849/f38cb333-83a0-41ce-b40b-312888802d7c)
 
 > `Note: Do not edit or delete the private ip route you can see in the route table as it is for internal communication`
 
-## Step 9:
+# Step 9: Subnet association
 
-* Subnet association
+- **_Associate private subnet to private route_**
+* Right click on private-route and choose "Edit subnet associations"
 
 ![image](https://github.com/Akshay-Gk/Install-Wordpress-securely-in-a-custom-aws-vpc/assets/112197849/bb4c450f-5253-4ff4-867c-890c76a142ae)
 
-- Associate private subnet to private route.
-- select private subnet(my-private-1) and save changes
+- Select "my-private-1" subnet and save changes
 
 ![image](https://github.com/Akshay-Gk/Install-Wordpress-securely-in-a-custom-aws-vpc/assets/112197849/01db47c6-d001-49d6-ac64-997f34f9d55d)
 
 > `Note: By default all subnet will be associated with default route`
 
-## Step 10:
+# Step 10: Create security group.
 
-* Create security group.
 
-- Here we are creating 3 instances with name frontend,bastion and backend so we need 3 security group(sg)
-- For all 3 intstance we create different security rules to tighten security.
+* **_- Here we are creating 3 instances with name frontend,bastion and backend so we need 3 security group(sg). F
 
 > `Note: A bastion host is a special-purpose computer on a network specifically designed and configured to withstand attacks`
 
-a) Security group for bastion server
+a) **_Security group for bastion server_**
 
-- Add name. Here im giving my-bastion
-- change vpc to my-vpc
+- Add name. Here i'm giving "my-bastion"
+- Change vpc to "my-vpc"
 
 ![image](https://github.com/Akshay-Gk/Install-Wordpress-securely-in-a-custom-aws-vpc/assets/112197849/f2392c6a-4238-402a-a090-3fe71dca27b5)
 
-- Add inbound rules
-- Type will be ssh and ip here im giving as my ip 
-- In out bound rules all traffic is allowed.
+- **Add inbound rules**
+- Type will be "SSH" . Source i'm giving my ip
+- In out bound rules "All traffic" is allowed
 
 ![image](https://github.com/Akshay-Gk/Install-Wordpress-securely-in-a-custom-aws-vpc/assets/112197849/0c566f5d-046b-4cf6-88a4-d951e27c2dc6)
 
 
-> `Note: Here in inbound i gave ip as my ip since im setting the server like i will be only onlu one who will be able to ssh. you can aslo allow any ipv4 as per your requirement. Remember that our ip can change and once our ip is chaged we should edit this security group ans set our new ip to get access`
+> `Note: Here in inbound i'm giving ip as "my ip" as i'm setting SSH access to the server only for me. You can aslo allow "any ipv4" as per your requirement. Remember when we choose "my ip" our ip can change and once our ip is chaged we should edit this security group ans set our new ip to get access`
 
-b) Security group for frontend server
+b) **_Security group for frontend server_**
 
-- Add name. Here im giving my-frontend
-- change vpc to my-vpc
+- Add name. Here i'm giving "my-frontend"
+- Change vpc to "my-vpc"
+
 - Add inbound rules
+
 - Here we add three rules in inbound
-1. ssh from bastion security group id
-2. http from any ipv4
-3. https from any ipv4
-- In out bound rules all traffic is allowed
+1. ssh from "bastion security group id"
+2. http from "any ipv4"
+3. https from "any ipv4"
+- In out bound rules "All traffic" is allowed
 
 ![image](https://github.com/Akshay-Gk/Install-Wordpress-securely-in-a-custom-aws-vpc/assets/112197849/fa2fd2f8-2862-4dd3-bc39-5c3a4f20506b)
 
 
-c) Security group for backend server
+c) **_Security group for backend server_**
 
-- Add name. Here im giving my-backend
-- change vpc to my-vpc
+- Add name. Here i'm giving "my-backend"
+- Change vpc to "my-vpc"
+
 - Add inbound rules
+
 - Here we add two rules in inbound
-1. ssh from bastion security group id
-2. Allow 3306(mysql/aurora) from my-frontend id
-- In out bound rules all traffic is allowed.
+1. ssh from "bastion security group id"
+2. Allow "3306(mysql/aurora)" from "my-frontend id"
+- In out bound rules "All traffic" is allowed
 
 ![image](https://github.com/Akshay-Gk/Install-Wordpress-securely-in-a-custom-aws-vpc/assets/112197849/3e84641e-8899-4221-9637-f21898a3af7d)
 
-## Step 11:
+## Step 11: Create ec2 instance
 
-* Create ec2 instance
 
-- Here we are creating 3 instances with name bastion,frontend and backend
+- **_Here we are creating 3 instances with name bastion,frontend and backend_**
 
 a)  bastion instance
 
