@@ -1,100 +1,99 @@
 # **_Install Wordpress Securely in a custom aws vpc_**
 
-## Description:
+# Description:
 
 Database servers are the most important servers in any small or a big company because it contains all the data sets that can be of any user or employee of that company. The best practices of server security are therefore focused on protecting digital assets from cybercriminals. This approach is necessary because numerous hackers exploit existing vulnerabilities for financial gain. Here we set up a custom made secure setup for installing wordpress and protecting our server.
 
-## Diagram:
+# Diagram:
 
 ![image](https://github.com/Akshay-Gk/Install-Wordpress-securely-in-a-custom-aws-vpc/assets/112197849/77544d7c-f383-4347-a5b8-02b5e24c8616)
 
 
-## Step 1:
+# Step 1: Create a VPC
 
-*Create a VPC
- - My region is Ohio
+> `Note: My region is Ohio`
  
-a) Login to aws console > VPC >  Create VPC
-  - Add a name to vpc. Here im givibg my-vpc
-  - provide an ip address. Here im using 172.20.0.0/16
+a) **_Login to aws console > VPC >  In the VPC Dashboard, choose Create VPC_**
+
+  - Add a name to vpc. Here i'm using **"my-vpc"**
+  - Provide an IPv4 CIDR block. Here i'm using **"172.20.0.0/16"**
 
 ![image](https://github.com/Akshay-Gk/Install-Wordpress-securely-in-a-custom-aws-vpc/assets/112197849/7ab35d37-f3de-4fb2-8744-db7faee26f1f)
 
-b) We need to allow DNS hostname so thatvinstances launched in the VPC receive public DNS hostnames that correspond to their public IP addresses.
+b) **_We need to enable "DNS hostname" for the vpc so that, when an instances is launched inside VPC it will receive public DNS hostname that corresponds to the public IP address_**
+
 - Right click on the VPC ID created and choose *vpc settings*
 - Enable DNS hostnames
 
 ![image](https://github.com/Akshay-Gk/Install-Wordpress-securely-in-a-custom-aws-vpc/assets/112197849/119a5e87-adfe-4455-982b-ee0fafd88e0b)
 
-## Step 2:
+# Step 2: Create an internet gateway(igw)
 
-* Create an internet gateway (igw)
-
-- Add name. im giving my-vpc-igw
+- Add name. I'm using **"my-vpc-igw"**
 
 ![image](https://github.com/Akshay-Gk/Install-Wordpress-securely-in-a-custom-aws-vpc/assets/112197849/79d7b2ce-1bbf-4d59-9623-b9c578e624d6)
 
-## Step 3:
+# Step 3: Attach igw to vpc
 
-- Attach igw to vpc (my-vpc)
+* Click on the above "Attach to a VPC" option and select **"my-vpc"**
 
 ![image](https://github.com/Akshay-Gk/Install-Wordpress-securely-in-a-custom-aws-vpc/assets/112197849/a94c5ef1-ad61-4318-a23e-ca897f386843)
 
-## Step 4:
+# Step 4: Create Subnets
 
-* Create Subnets
-
-- Here im creating 3 subnets ,Two public and one private.
-- Give your VPC id
-- Subnet name. Here im giving my-public-1
-- Choose the AZ. Here i chose us-east-2a
-- Provide the ip address for the subnet. Here im giving 172.20.0.0/18
+- Here i'm creating 3 subnets ,Two public and one private.
+- Select the VPC id
+- Add subnet name. Here i'm using name **"my-public-1"**
+- Choose the AZ. Here i'm choosing **"us-east-2a"**
+- Provide IPv4 CIDR block for the subnet. Here i'm using **"172.20.0.0/18"**
 
 ![image](https://github.com/Akshay-Gk/Install-Wordpress-securely-in-a-custom-aws-vpc/assets/112197849/ba9dfd9a-3120-449f-a48d-1cdfe7ef044e)
 
-- second subnet name is my-public-2
-- ip address 172.20.64.0/18
-- AZ is us-east-2b
+- Second subnet name is **"my-public-2"**
+- ip address **"172.20.64.0/18"**
+- AZ is **"us-east-2b"**
 
 ![image](https://github.com/Akshay-Gk/Install-Wordpress-securely-in-a-custom-aws-vpc/assets/112197849/98c3834d-6e91-41f4-9b2b-6a279b855fb7)
 
-- Third  subnet name is my-private-1
-- ip address 172.20.128.0/18
-- AZ is us-east-2c
+- Third  subnet name is **"my-private-1"**
+- ip address **"172.20.128.0/18"**
+- AZ is **"us-east-2c"**
 
 ![image](https://github.com/Akshay-Gk/Install-Wordpress-securely-in-a-custom-aws-vpc/assets/112197849/dfb2b8dc-0578-4e42-92d0-ad7641bdb62a)
 
-## Step 5:
+# Step 5: Enable public ipv4 
 
-Enable public ipv4 for my-public-1 & my-public-2 subnets.
+*  **_Right click on subnet ID and choose Edit "subnet settings"_**
+*  Enable public ipv4 for **"my-public-1 & my-public-2"** subnets
 
 ![image](https://github.com/Akshay-Gk/Install-Wordpress-securely-in-a-custom-aws-vpc/assets/112197849/01e61fa1-f55f-4d7f-8ed6-eaf4c9a1e42c)
 
-## Step 6:
+# Step 6: Create NAT Gateway
 
-* Create a NAT Gateway.
-
-- Add a name. Here im giving my-nat
-- Select any of the public subnet.
-- choose public on connectivity type
-- Allocate Elastic ip for nat
+- Add a name. Here i'm giving **"my-nat"**
+- Select any of the public subnet
+- Choose "public" on connectivity type
+- Click on "Allocate Elastic IP" option and allocate a public ip fot the NAT gateway
 
 ![image](https://github.com/Akshay-Gk/Install-Wordpress-securely-in-a-custom-aws-vpc/assets/112197849/b400dd55-9806-4086-8630-f40c0162f35d)
 
-> `Note: Nat Gateway should be created in one of the public subnet and assign an elastic ip. we use this for the private subnet to access internet from inside`
+> `Note: Nat Gateway should be created on a public subnet and assign  elastic ip. We use this for the private subnet to access internet from inside`
 
-## Step 7:
+# Step 7: Edit routing table
 
-* Edit routing table
 
-- Here we edit default routing table of my-vpc
+- **_Here we edit default routing table of **"my-vpc"**_**
+
+* Select the default route and in "Action" option choose "Edit routes"
+
 ![image](https://github.com/Akshay-Gk/Install-Wordpress-securely-in-a-custom-aws-vpc/assets/112197849/c445d47e-b0e8-4d92-a27f-157d91a0443a)
 
-- Add a new route to 0.0.0.0/0 and give target as internet gateway(my-vpc-igw)
+- **_Add a new route_**
+- Choose Destination as "0.0.0.0/0" and target as "nternet gateway(my-vpc-igw)"
 
 ![image](https://github.com/Akshay-Gk/Install-Wordpress-securely-in-a-custom-aws-vpc/assets/112197849/a05dd268-6f6b-4913-be6b-19a81dfb3093)
 
-- Name default route as Public-route
+- Name default route as **"Public-route"**
 
 ## Step 8:
 
