@@ -125,7 +125,7 @@ b) **_We need to enable "DNS hostname" for the vpc so that, when an instances is
 # Step 10: Create security group.
 
 
-* **_- Here we are creating 3 instances with name frontend,bastion and backend so we need 3 security group(sg). F
+* **_Here we are creating 3 instances with name frontend,bastion and backend so we need 3 security group(sg). F
 
 > `Note: A bastion host is a special-purpose computer on a network specifically designed and configured to withstand attacks`
 
