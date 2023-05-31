@@ -72,8 +72,8 @@ b) **_We need to enable "DNS hostname" for the vpc so that, when an instances is
 
 - Add a name. Here i'm giving **"my-nat"**
 - Select any of the public subnet
-- Choose "public" on connectivity type
-- Click on "Allocate Elastic IP" option and allocate a public ip fot the NAT gateway
+- Choose **"public"** on connectivity type
+- Click on **"Allocate Elastic IP"** option and allocate a public ip fot the NAT gateway
 
 ![image](https://github.com/Akshay-Gk/Install-Wordpress-securely-in-a-custom-aws-vpc/assets/112197849/b400dd55-9806-4086-8630-f40c0162f35d)
 
@@ -200,7 +200,7 @@ b) **frontend instance**
 
 ![image](https://github.com/Akshay-Gk/Install-Wordpress-securely-in-a-custom-aws-vpc/assets/112197849/ffa2a98a-da1f-4ea0-8e4f-9c7b34ce4383)
 
-c) **Frontend instance**
+c) **backend instance**
 
 - Add name .Here i'm giving my-backend-server
 - Select "my-vpc"
